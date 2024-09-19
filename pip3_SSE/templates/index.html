@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Message System</title>
+    <script>
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+            fetch('/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message })
+            }).then(() => {
+                document.getElementById('messageInput').value = '';  // Clear input after sending
+            });
+        }
+
+        function setupEventSource() {
+            const evtSource = new EventSource('/stream');
+            evtSource.onmessage = function(event) {
+                const messageTable = document.getElementById('messageTable');
+                let newRow = messageTable.insertRow(-1);
+                let newCell = newRow.insertCell(0);
+                newCell.textContent = event.data;
+            };
+        }
+    </script>
+</head>
+<body onload="setupEventSource()">
+    <h1>Message System</h1>
+    <input type="text" id="messageInput" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send Message</button>
+    <table id="messageTable">
+        <tr>
+            <th>Messages</th>
+        </tr>
+    </table>
+</body>
+</html>

@@ -51,6 +51,7 @@
 		2100AC1B2C9C554D005D7670 /* iOS-RealTime-Communication-Practice */ = {
 			isa = PBXGroup;
 			children = (
+				2100AC2A2C9C5760005D7670 /* Services */,
 				2100AC1C2C9C554D005D7670 /* iOS_RealTime_Communication_PracticeApp.swift */,
 				2100AC1E2C9C554D005D7670 /* ContentView.swift */,
 				2100AC202C9C5550005D7670 /* Assets.xcassets */,
@@ -65,6 +66,13 @@
 				2100AC232C9C5550005D7670 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2100AC2A2C9C5760005D7670 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
