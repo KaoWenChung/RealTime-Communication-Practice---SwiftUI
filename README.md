@@ -27,25 +27,24 @@ This project implements a real-time messaging system using Flask and Server-Sent
 ### Installation Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/KaoWenChung/real-time-message-system.git
-   cd real-time-message-system
+   git clone https://github.com/KaoWenChung/RealTime-Communication-Practice-SwiftUI.git
+   cd RealTime-Communication-Practice-SwiftUI/pip3_SSE
    ```
 
 2. Set up a virtual environment:
    ```bash
-   python -m venv venv
+   python3 -m venv venv
    source venv/bin/activate
-   pip install -r requirements.txt
    ```
 
 3. Install the requirements:
    ```bash
-   pip install flask
+   pip3 install -r requirements.txt
    ```
 
 4. Run the application:
    ```bash
-   python app.py
+   python3 app.py
    ```
 
 ### Accessing the Application
