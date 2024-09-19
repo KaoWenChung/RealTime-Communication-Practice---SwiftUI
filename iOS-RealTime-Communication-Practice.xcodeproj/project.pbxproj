@@ -11,6 +11,9 @@
 		2100AC1F2C9C554D005D7670 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC1E2C9C554D005D7670 /* ContentView.swift */; };
 		2100AC212C9C5550005D7670 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2100AC202C9C5550005D7670 /* Assets.xcassets */; };
 		2100AC242C9C5550005D7670 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2100AC232C9C5550005D7670 /* Preview Assets.xcassets */; };
+		2100AC302C9C82B4005D7670 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC2F2C9C82B4005D7670 /* NetworkService.swift */; };
+		2100AC332C9C8443005D7670 /* Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC322C9C8443005D7670 /* Interfaces.swift */; };
+		2100AC372C9C84B5005D7670 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC362C9C84B5005D7670 /* ContentViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,9 @@
 		2100AC1E2C9C554D005D7670 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2100AC202C9C5550005D7670 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2100AC232C9C5550005D7670 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2100AC2F2C9C82B4005D7670 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		2100AC322C9C8443005D7670 /* Interfaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interfaces.swift; sourceTree = "<group>"; };
+		2100AC362C9C84B5005D7670 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,9 +57,9 @@
 		2100AC1B2C9C554D005D7670 /* iOS-RealTime-Communication-Practice */ = {
 			isa = PBXGroup;
 			children = (
-				2100AC2A2C9C5760005D7670 /* Services */,
 				2100AC1C2C9C554D005D7670 /* iOS_RealTime_Communication_PracticeApp.swift */,
-				2100AC1E2C9C554D005D7670 /* ContentView.swift */,
+				2100AC342C9C849E005D7670 /* Presentation */,
+				2100AC2E2C9C8294005D7670 /* Infrastructure */,
 				2100AC202C9C5550005D7670 /* Assets.xcassets */,
 				2100AC222C9C5550005D7670 /* Preview Content */,
 			);
@@ -68,11 +74,30 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		2100AC2A2C9C5760005D7670 /* Services */ = {
+		2100AC2E2C9C8294005D7670 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				2100AC312C9C8431005D7670 /* Interface */,
+				2100AC2F2C9C82B4005D7670 /* NetworkService.swift */,
 			);
-			path = Services;
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		2100AC312C9C8431005D7670 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				2100AC322C9C8443005D7670 /* Interfaces.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		2100AC342C9C849E005D7670 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				2100AC1E2C9C554D005D7670 /* ContentView.swift */,
+				2100AC362C9C84B5005D7670 /* ContentViewModel.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,7 +171,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2100AC1F2C9C554D005D7670 /* ContentView.swift in Sources */,
+				2100AC302C9C82B4005D7670 /* NetworkService.swift in Sources */,
 				2100AC1D2C9C554D005D7670 /* iOS_RealTime_Communication_PracticeApp.swift in Sources */,
+				2100AC332C9C8443005D7670 /* Interfaces.swift in Sources */,
+				2100AC372C9C84B5005D7670 /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
