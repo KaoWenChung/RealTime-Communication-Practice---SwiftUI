@@ -27,7 +27,7 @@ This project implements a real-time messaging system using Flask and Server-Sent
 ### Installation Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/real-time-message-system.git
+   git clone https://github.com/KaoWenChung/real-time-message-system.git
    cd real-time-message-system
    ```
 
