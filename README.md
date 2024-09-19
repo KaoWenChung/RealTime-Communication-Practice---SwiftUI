@@ -13,11 +13,6 @@ This project implements a real-time messaging system using Flask and Server-Sent
 - **Frontend**: HTML, JavaScript
 - **Communication**: Server-Sent Events (SSE)
 
-## Project Structure
-- `app.py`: The Flask application.
-- `templates/`
-  - `index.html`: The HTML file for the frontend interface.
-
 ## Setup and Installation
 
 ### Prerequisites
