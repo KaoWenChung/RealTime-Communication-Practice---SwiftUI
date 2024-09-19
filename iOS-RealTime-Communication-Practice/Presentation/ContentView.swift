@@ -23,13 +23,20 @@ struct ContentView: View {
                 TextField("Type a message...", text: $messageText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 Button("Send") {
-                    viewModel.sendMessage(messageText)
-                    messageText.removeAll()
+                    Task {
+                        await viewModel.sendMessage(messageText)
+                        messageText.removeAll()
+                    }
                 }
             }
             .padding()
         }
-        .onAppear(perform: viewModel.setupEventSource)
+        .onAppear {
+            Task {
+                await viewModel.readMessages()
+                viewModel.setupEventSource()
+            }
+        }
     }
 }
 

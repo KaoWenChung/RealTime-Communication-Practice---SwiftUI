@@ -6,37 +6,59 @@
 //
 
 import SwiftUI
+import Combine
 
 protocol ContentViewModel {
     var messages: [String] { get }
     func setupEventSource()
-    func sendMessage(_ message: String)
+    func sendMessage(_ message: String) async
+    func readMessages() async
 }
 
 @Observable
 final class DefaultContentViewModel: ContentViewModel {
+    private let msgService: MessageSSEService
+    private var cancellables = Set<AnyCancellable>()
     private(set) var messages: [String] = []
-    func setupEventSource() {
-        let url = URL(string: "http://127.0.0.1:5000/stream")!
-        var request = URLRequest(url: url)
-        request.timeoutInterval = TimeInterval.infinity
-        let task = URLSession.shared.dataTask(with: request) { data, _, _ in
-            if let data = data, let string = String(data: data, encoding: .utf8) {
-                DispatchQueue.main.async {
-                    self.messages.append(string.replacingOccurrences(of: "data: ", with: ""))
-                }
-            }
-        }
-        task.resume()
+
+    init(msgService: MessageSSEService = DefaultMessageSSEService()) {
+        self.msgService = msgService
     }
-    func sendMessage(_ message: String) {
-        let url = URL(string: "http://127.0.0.1:5000/send")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        let body: [String: String] = ["message": message]
-        request.httpBody = try? JSONEncoder().encode(body)
-        URLSession.shared.dataTask(with: request) { _, _, _ in
-        }.resume()
+
+    func setupEventSource() {
+        try? msgService.setupEventSource()
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    print("SSE stream finished")
+                case .failure(let error):
+                    print("Error receiving SSE:", error)
+                }
+            }, receiveValue: { [weak self] newMessage in
+                self?.messages.append(newMessage)
+            })
+            .store(in: &cancellables)
+    }
+
+    func readMessages() async {
+        do {
+            let allMsgs = try await msgService.readMsgs()
+            messages = allMsgs
+        } catch {
+            print("something wrong:", error)
+        }
+    }
+
+    func sendMessage(_ message: String) async {
+        do {
+            try await msgService.sendMsg(message)
+        } catch {
+            print("something wrong:", error)
+        }
     }
 }
+/*
+ func setupEventSource() {
+         
+     }
+ */

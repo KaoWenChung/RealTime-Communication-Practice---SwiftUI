@@ -1,13 +1,21 @@
 from flask import Flask, Response, request, jsonify, render_template
 import queue
+import threading
 
 app = Flask(__name__)
-messages = queue.Queue()
 
-def event_stream():
+all_messages = []
+
+clients = []
+clients_lock = threading.Lock()
+
+def event_stream(client_queue):
     while True:
-        message = messages.get()  # Wait for a message
-        yield f"data: {message}\n\n"
+        try:
+            message = client_queue.get()
+            yield f"data: {message}\n\n"
+        except GeneratorExit:
+            break
 
 @app.route('/')
 def index():
@@ -15,12 +23,25 @@ def index():
 
 @app.route('/stream')
 def stream():
-    return Response(event_stream(), content_type='text/event-stream')
+    client_queue = queue.Queue()
+    with clients_lock:
+        clients.append(client_queue)
+    return Response(event_stream(client_queue), content_type='text/event-stream')
+
+@app.route('/messages', methods=['GET'])
+def get_messages():
+    return jsonify(all_messages)
 
 @app.route('/send', methods=['POST'])
 def send():
-    message = request.json.get('message', '')
-    messages.put(f"Message Sent: {message}")
+    message = request.json.get('message', '').strip()
+    if not message:
+        return jsonify(success=False, error="Message cannot be empty"), 400
+    full_message = f"Message Sent: {message}"
+    all_messages.append(full_message)
+    with clients_lock:
+        for client_queue in clients:
+            client_queue.put(full_message)
     return jsonify(success=True)
 
 if __name__ == '__main__':

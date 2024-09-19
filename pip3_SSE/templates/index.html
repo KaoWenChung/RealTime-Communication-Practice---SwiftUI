@@ -13,7 +13,7 @@
                 },
                 body: JSON.stringify({ message: message })
             }).then(() => {
-                document.getElementById('messageInput').value = '';  // Clear input after sending
+                document.getElementById('messageInput').value = '';
             });
         }
 
@@ -26,9 +26,27 @@
                 newCell.textContent = event.data;
             };
         }
+
+        function fetchMessages() {
+            fetch('/messages')
+                .then(response => response.json())
+                .then(data => {
+                    const messageTable = document.getElementById('messageTable');
+                    data.forEach(message => {
+                        let newRow = messageTable.insertRow(-1);
+                        let newCell = newRow.insertCell(0);
+                        newCell.textContent = message;
+                    });
+                });
+        }
+
+        window.onload = function() {
+            setupEventSource();
+            fetchMessages();
+        }
     </script>
 </head>
-<body onload="setupEventSource()">
+<body>
     <h1>Message System</h1>
     <input type="text" id="messageInput" placeholder="Type a message...">
     <button onclick="sendMessage()">Send Message</button>
