@@ -10,7 +10,7 @@ import Foundation
 protocol DataTransfer {
     func request(_ request: URLRequest) async throws
     func request<T: Decodable>(_ request: URLRequest) async throws -> T
-    func dataTaskPublisher(_ url: URLRequest) -> URLSession.DataTaskPublisher
+    func dataTask(with request: URLRequest) -> URLSessionDataTask
 }
 
 final class DefaultDataTransfer {
@@ -34,7 +34,7 @@ extension DefaultDataTransfer: DataTransfer {
         return result
     }
 
-    func dataTaskPublisher(_ url: URLRequest) -> URLSession.DataTaskPublisher {
-        urlSession.dataTaskPublisher(for: url)
+    func dataTask(with request: URLRequest) -> URLSessionDataTask {
+        urlSession.dataTask(with: request)
     }
 }

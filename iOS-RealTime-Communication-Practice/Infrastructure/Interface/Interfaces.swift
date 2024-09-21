@@ -9,7 +9,7 @@ import Foundation
 
 protocol URLSessionType {
     func data(for request: URLRequest, delegate: (any URLSessionTaskDelegate)?) async throws -> (Data, URLResponse)
-    func dataTaskPublisher(for url: URLRequest) -> URLSession.DataTaskPublisher
+    func dataTask(with request: URLRequest) -> URLSessionDataTask
 }
 
 protocol DecoderType {

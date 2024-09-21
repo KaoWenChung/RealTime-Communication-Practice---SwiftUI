@@ -26,7 +26,7 @@ final class DefaultContentViewModel: ContentViewModel {
     }
 
     func setupEventSource() {
-        try? msgService.setupEventSource()
+        msgService.setupEventSource()
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
@@ -57,8 +57,3 @@ final class DefaultContentViewModel: ContentViewModel {
         }
     }
 }
-/*
- func setupEventSource() {
-         
-     }
- */

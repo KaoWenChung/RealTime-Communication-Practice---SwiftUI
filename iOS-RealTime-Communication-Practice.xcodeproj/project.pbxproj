@@ -16,6 +16,7 @@
 		2100AC372C9C84B5005D7670 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC362C9C84B5005D7670 /* ContentViewModel.swift */; };
 		2100AC3A2C9C90B3005D7670 /* MessageSSEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC392C9C90B3005D7670 /* MessageSSEService.swift */; };
 		2100AC3D2C9C9527005D7670 /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC3C2C9C9527005D7670 /* APIEndpoints.swift */; };
+		2100AC432C9F71B7005D7670 /* Notification+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC422C9F71B7005D7670 /* Notification+Name.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		2100AC362C9C84B5005D7670 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		2100AC392C9C90B3005D7670 /* MessageSSEService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSSEService.swift; sourceTree = "<group>"; };
 		2100AC3C2C9C9527005D7670 /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
+		2100AC422C9F71B7005D7670 /* Notification+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Name.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				2100AC202C9C5550005D7670 /* Assets.xcassets */,
+				2100AC412C9F71AD005D7670 /* Common */,
 				2100AC3B2C9C951C005D7670 /* APIEndpoints */,
 				2100AC2E2C9C8294005D7670 /* Infrastructure */,
 				2100AC1C2C9C554D005D7670 /* iOS_RealTime_Communication_PracticeApp.swift */,
@@ -120,6 +123,14 @@
 				2100AC3C2C9C9527005D7670 /* APIEndpoints.swift */,
 			);
 			path = APIEndpoints;
+			sourceTree = "<group>";
+		};
+		2100AC412C9F71AD005D7670 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2100AC422C9F71B7005D7670 /* Notification+Name.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +210,7 @@
 				2100AC1D2C9C554D005D7670 /* iOS_RealTime_Communication_PracticeApp.swift in Sources */,
 				2100AC332C9C8443005D7670 /* Interfaces.swift in Sources */,
 				2100AC372C9C84B5005D7670 /* ContentViewModel.swift in Sources */,
+				2100AC432C9F71B7005D7670 /* Notification+Name.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
