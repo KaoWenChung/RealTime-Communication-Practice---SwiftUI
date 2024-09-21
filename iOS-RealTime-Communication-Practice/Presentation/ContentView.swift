@@ -11,9 +11,10 @@ struct ContentView: View {
     @State private var messageText = ""
     @State private var viewModel: ContentViewModel
 
-    init(viewModel: ContentViewModel = DefaultContentViewModel()) {
+    init(viewModel: ContentViewModel) {
         self.viewModel = viewModel
     }
+
     var body: some View {
         VStack {
             List(viewModel.messages, id: \.self) { message in

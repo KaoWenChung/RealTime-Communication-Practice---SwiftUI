@@ -20,14 +20,12 @@ protocol MessageSSEService {
 
 final class DefaultMessageSSEService {
     private let dataTransfer: DataTransfer
-    private let sseHandler = SSEHandler()
+    private let sseDataTransfer: DataTransfer
     private var cancellables = Set<AnyCancellable>()
-    init(dataTransfer: DataTransfer = DefaultDataTransfer()) {
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = TimeInterval.infinity
-        configuration.timeoutIntervalForResource = TimeInterval.infinity
-        URLSession(configuration: configuration, delegate: sseHandler, delegateQueue: .main)
+    init(dataTransfer: DataTransfer = DefaultDataTransfer(),
+         sseDataTransfer: DataTransfer) {
         self.dataTransfer = dataTransfer
+        self.sseDataTransfer = sseDataTransfer
     }
 }
 
@@ -56,21 +54,10 @@ extension DefaultMessageSSEService: MessageSSEService {
         guard let url = URL(string: urlString) else {
             return Fail(error: ServiceError.urlGeneration).eraseToAnyPublisher()
         }
-        
         var request = URLRequest(url: url)
         request.addValue("text/event-stream", forHTTPHeaderField: "Accept")
-
-        sseHandler.onMessageReceived = { message in
-            // Broadcast the message
-            print("SSE Message received: \(message)")
-            NotificationCenter.default.post(name: .newSSEMessage, object: message)
-        }
-
-        // Create the data task to handle SSE
-        let dataTask = dataTransfer.dataTask(with: request)
+        let dataTask = sseDataTransfer.dataTask(with: request)
         dataTask.resume()
-
-        // Use Combine to receive the messages posted via NotificationCenter
         return NotificationCenter.default.publisher(for: .newSSEMessage)
             .compactMap { $0.object as? String }
             .setFailureType(to: Error.self)
@@ -79,16 +66,14 @@ extension DefaultMessageSSEService: MessageSSEService {
 }
 
 class SSEHandler: NSObject, URLSessionDataDelegate {
-    var onMessageReceived: ((String) -> Void)?
-
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         if let message = String(data: data, encoding: .utf8) {
-            // Process the incoming data as a string
             let lines = message.components(separatedBy: "\n\n")
             for line in lines {
                 if line.hasPrefix("data: ") {
                     let eventMessage = line.dropFirst(6)
-                    onMessageReceived?(String(eventMessage))
+                    print("SSE Message received: \(eventMessage)")
+                    NotificationCenter.default.post(name: .newSSEMessage, object: eventMessage)
                 }
             }
         }

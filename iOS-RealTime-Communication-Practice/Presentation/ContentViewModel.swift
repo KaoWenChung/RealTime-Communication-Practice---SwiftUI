@@ -21,7 +21,7 @@ final class DefaultContentViewModel: ContentViewModel {
     private var cancellables = Set<AnyCancellable>()
     private(set) var messages: [String] = []
 
-    init(msgService: MessageSSEService = DefaultMessageSSEService()) {
+    init(msgService: MessageSSEService) {
         self.msgService = msgService
     }
 

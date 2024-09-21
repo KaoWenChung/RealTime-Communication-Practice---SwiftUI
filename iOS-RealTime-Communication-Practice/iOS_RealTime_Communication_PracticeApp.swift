@@ -11,7 +11,14 @@ import SwiftUI
 struct iOS_RealTime_Communication_PracticeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let configuration = URLSessionConfiguration.default
+            configuration.timeoutIntervalForRequest = TimeInterval.infinity
+            configuration.timeoutIntervalForResource = TimeInterval.infinity
+            let sseHandler = SSEHandler()
+            let urlsession = URLSession(configuration: configuration, delegate: sseHandler, delegateQueue: .main)
+            let contentVM = DefaultContentViewModel(msgService: DefaultMessageSSEService(sseDataTransfer: DefaultDataTransfer(urlSession: urlsession)))
+
+            return ContentView(viewModel: contentVM)
         }
     }
 }
