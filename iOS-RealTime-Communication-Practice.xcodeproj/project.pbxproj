@@ -17,6 +17,8 @@
 		2100AC3A2C9C90B3005D7670 /* MessageSSEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC392C9C90B3005D7670 /* MessageSSEService.swift */; };
 		2100AC3D2C9C9527005D7670 /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC3C2C9C9527005D7670 /* APIEndpoints.swift */; };
 		2100AC432C9F71B7005D7670 /* Notification+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2100AC422C9F71B7005D7670 /* Notification+Name.swift */; };
+		21DC52932CA2093500F3840E /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC52922CA2093500F3840E /* CategoryView.swift */; };
+		21DC52952CA2097200F3840E /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC52942CA2097200F3840E /* DIContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		2100AC392C9C90B3005D7670 /* MessageSSEService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSSEService.swift; sourceTree = "<group>"; };
 		2100AC3C2C9C9527005D7670 /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
 		2100AC422C9F71B7005D7670 /* Notification+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Name.swift"; sourceTree = "<group>"; };
+		21DC52922CA2093500F3840E /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		21DC52942CA2097200F3840E /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				2100AC1E2C9C554D005D7670 /* ContentView.swift */,
+				21DC52922CA2093500F3840E /* CategoryView.swift */,
 				2100AC362C9C84B5005D7670 /* ContentViewModel.swift */,
 			);
 			path = Presentation;
@@ -128,6 +133,7 @@
 		2100AC412C9F71AD005D7670 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				21DC52942CA2097200F3840E /* DIContainer.swift */,
 				2100AC422C9F71B7005D7670 /* Notification+Name.swift */,
 			);
 			path = Common;
@@ -205,12 +211,14 @@
 			files = (
 				2100AC1F2C9C554D005D7670 /* ContentView.swift in Sources */,
 				2100AC3D2C9C9527005D7670 /* APIEndpoints.swift in Sources */,
+				21DC52952CA2097200F3840E /* DIContainer.swift in Sources */,
 				2100AC3A2C9C90B3005D7670 /* MessageSSEService.swift in Sources */,
 				2100AC302C9C82B4005D7670 /* DataTransfer.swift in Sources */,
 				2100AC1D2C9C554D005D7670 /* iOS_RealTime_Communication_PracticeApp.swift in Sources */,
 				2100AC332C9C8443005D7670 /* Interfaces.swift in Sources */,
 				2100AC372C9C84B5005D7670 /* ContentViewModel.swift in Sources */,
 				2100AC432C9F71B7005D7670 /* Notification+Name.swift in Sources */,
+				21DC52932CA2093500F3840E /* CategoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

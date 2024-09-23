@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 protocol ContentViewModel {
+    var title: String { get }
     var messages: [String] { get }
     func setupEventSource()
     func sendMessage(_ message: String) async
@@ -17,11 +18,14 @@ protocol ContentViewModel {
 
 @Observable
 final class DefaultContentViewModel: ContentViewModel {
+    let title: String
     private let msgService: MessageSSEService
     private var cancellables = Set<AnyCancellable>()
     private(set) var messages: [String] = []
 
-    init(msgService: MessageSSEService) {
+    init(title: String = "",
+         msgService: MessageSSEService) {
+        self.title = title
         self.msgService = msgService
     }
 

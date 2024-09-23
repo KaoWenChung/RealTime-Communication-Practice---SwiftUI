@@ -32,6 +32,7 @@ struct ContentView: View {
             }
             .padding()
         }
+        .navigationTitle(viewModel.title)
         .onAppear {
             Task {
                 await viewModel.readMessages()
