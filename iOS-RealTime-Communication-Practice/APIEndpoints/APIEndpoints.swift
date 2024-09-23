@@ -10,4 +10,5 @@ enum APIEndpoints {
     static let stream = baseURLString + "stream"
     static let readMsgs = baseURLString + "messages"
     static let sendMsg = baseURLString + "send"
+    static let websocket = "ws://127.0.0.1:5000/socket.io/websocket"
 }

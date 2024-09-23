@@ -21,13 +21,8 @@ final class DIContainer {
     }
 
     func makeWebSocketView() -> ContentView {
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = TimeInterval.infinity
-        configuration.timeoutIntervalForResource = TimeInterval.infinity
-        let sseHandler = SSEHandler()
-        let urlsession = URLSession(configuration: configuration, delegate: sseHandler, delegateQueue: .main)
         let contentVM = DefaultContentViewModel(title: "WebSocket",
-                                                msgService: DefaultMessageSSEService(sseDataTransfer: DefaultDataTransfer(urlSession: urlsession)))
+                                                msgService: DefaultMessageWebSocketService())
 
         return ContentView(viewModel: contentVM)
     }

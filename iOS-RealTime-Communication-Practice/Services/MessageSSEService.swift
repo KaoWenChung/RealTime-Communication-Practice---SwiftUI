@@ -12,12 +12,6 @@ enum ServiceError: Error {
     case urlGeneration
 }
 
-protocol MessageSSEService {
-    func sendMsg(_ message: String) async throws
-    func readMsgs() async throws -> [String]
-    func setupEventSource() -> AnyPublisher<String, Error>
-}
-
 final class DefaultMessageSSEService {
     private let dataTransfer: DataTransfer
     private let sseDataTransfer: DataTransfer
@@ -29,10 +23,10 @@ final class DefaultMessageSSEService {
     }
 }
 
-extension DefaultMessageSSEService: MessageSSEService {
+extension DefaultMessageSSEService: MessageService {
     func sendMsg(_ message: String) async throws {
         let urlString = APIEndpoints.sendMsg
-        guard let url = URL(string: urlString) else { throw ServiceError.urlGeneration }
+        guard let url = URL(string: urlString) else { fatalError("Invalid URL") }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -43,13 +37,13 @@ extension DefaultMessageSSEService: MessageSSEService {
 
     func readMsgs() async throws -> [String] {
         let urlString = APIEndpoints.readMsgs
-        guard let url = URL(string: urlString) else { throw ServiceError.urlGeneration }
+        guard let url = URL(string: urlString) else { fatalError("Invalid URL") }
         let request = URLRequest(url: url)
         let result: [String] = try await dataTransfer.request(request)
         return result
     }
 
-    func setupEventSource() -> AnyPublisher<String, Error> {
+    func setupConnection() -> AnyPublisher<String, Error> {
         let urlString = APIEndpoints.stream
         guard let url = URL(string: urlString) else {
             return Fail(error: ServiceError.urlGeneration).eraseToAnyPublisher()
@@ -62,28 +56,5 @@ extension DefaultMessageSSEService: MessageSSEService {
             .compactMap { $0.object as? String }
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
-    }
-}
-
-class SSEHandler: NSObject, URLSessionDataDelegate {
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        if let message = String(data: data, encoding: .utf8) {
-            let lines = message.components(separatedBy: "\n\n")
-            for line in lines {
-                if line.hasPrefix("data: ") {
-                    let eventMessage = line.dropFirst(6)
-                    print("SSE Message received: \(eventMessage)")
-                    NotificationCenter.default.post(name: .newSSEMessage, object: eventMessage)
-                }
-            }
-        }
-    }
-
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        if let error = error {
-            print("SSE connection failed with error: \(error)")
-        } else {
-            print("SSE connection completed")
-        }
     }
 }

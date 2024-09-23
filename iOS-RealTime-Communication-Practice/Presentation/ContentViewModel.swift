@@ -19,18 +19,18 @@ protocol ContentViewModel {
 @Observable
 final class DefaultContentViewModel: ContentViewModel {
     let title: String
-    private let msgService: MessageSSEService
+    private let msgService: MessageService
     private var cancellables = Set<AnyCancellable>()
     private(set) var messages: [String] = []
 
     init(title: String = "",
-         msgService: MessageSSEService) {
+         msgService: MessageService) {
         self.title = title
         self.msgService = msgService
     }
 
     func setupEventSource() {
-        msgService.setupEventSource()
+        msgService.setupConnection()
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
