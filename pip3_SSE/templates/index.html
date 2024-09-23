@@ -2,58 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Message System</title>
-    <script>
-        function sendMessage() {
-            const message = document.getElementById('messageInput').value;
-            fetch('/send', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ message: message })
-            }).then(() => {
-                document.getElementById('messageInput').value = '';
-            });
+    <title>Message System Catalog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
         }
-
-        function setupEventSource() {
-            const evtSource = new EventSource('/stream');
-            evtSource.onmessage = function(event) {
-                const messageTable = document.getElementById('messageTable');
-                let newRow = messageTable.insertRow(-1);
-                let newCell = newRow.insertCell(0);
-                newCell.textContent = event.data;
-            };
+        h1 {
+            text-align: center;
         }
-
-        function fetchMessages() {
-            fetch('/messages')
-                .then(response => response.json())
-                .then(data => {
-                    const messageTable = document.getElementById('messageTable');
-                    data.forEach(message => {
-                        let newRow = messageTable.insertRow(-1);
-                        let newCell = newRow.insertCell(0);
-                        newCell.textContent = message;
-                    });
-                });
+        .catalog {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
         }
-
-        window.onload = function() {
-            setupEventSource();
-            fetchMessages();
+        .catalog-item {
+            margin: 0 20px;
+            padding: 20px;
+            border: 1px solid #000;
+            border-radius: 8px;
+            text-align: center;
         }
-    </script>
+        .catalog-item a {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Message System</h1>
-    <input type="text" id="messageInput" placeholder="Type a message...">
-    <button onclick="sendMessage()">Send Message</button>
-    <table id="messageTable">
-        <tr>
-            <th>Messages</th>
-        </tr>
-    </table>
+
+<h1>Message System Catalog</h1>
+
+<div class="catalog">
+    <div class="catalog-item">
+        <a href="/sse">Server-Sent Events (SSE)</a>
+    </div>
+    <div class="catalog-item">
+        <a href="/websocket">Go to WebSocket</a>
+    </div>
+</div>
+
 </body>
 </html>
