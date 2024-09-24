@@ -19,6 +19,27 @@ final class DefaultMessageWebSocketService {
         let urlSession = URLSession(configuration: .default)
         self.webSocketTask = urlSession.webSocketTask(with: url)
     }
+
+    private func receiveMessage(_ subject: PassthroughSubject<String, Error>) {
+        webSocketTask.receive { [weak self] result in
+            switch result {
+            case .success(let message):
+                switch message {
+                case .string(let text):
+                    subject.send(text)
+                case .data(let data):
+                    if let text = String(data: data, encoding: .utf8) {
+                        subject.send(text)
+                    }
+                default:
+                    break
+                }
+                self?.receiveMessage(subject)
+            case .failure(let error):
+                subject.send(completion: .failure(error))
+            }
+        }
+    }
 }
 
 extension DefaultMessageWebSocketService: MessageService {
@@ -33,31 +54,9 @@ extension DefaultMessageWebSocketService: MessageService {
 
     func setupConnection() -> AnyPublisher<String, Error> {
         webSocketTask.resume()
-        
         let subject = PassthroughSubject<String, Error>()
-        
-        func receiveMessage() {
-            webSocketTask.receive { result in
-                switch result {
-                case .success(let message):
-                    switch message {
-                    case .string(let text):
-                        subject.send(text)
-                    case .data(let data):
-                        if let text = String(data: data, encoding: .utf8) {
-                            subject.send(text)
-                        }
-                    default:
-                        break
-                    }
-                    receiveMessage()
-                case .failure(let error):
-                    subject.send(completion: .failure(error))
-                }
-            }
-        }
-        receiveMessage()
-        
+        receiveMessage(subject)
+
         return subject.eraseToAnyPublisher()
     }
 }
