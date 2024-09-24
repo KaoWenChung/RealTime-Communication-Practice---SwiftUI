@@ -11,7 +11,7 @@ import Combine
 protocol ContentViewModel {
     var title: String { get }
     var messages: [String] { get }
-    func setupEventSource()
+    func setupListeners()
     func sendMessage(_ message: String) async
     func readMessages() async
 }
@@ -29,7 +29,8 @@ final class DefaultContentViewModel: ContentViewModel {
         self.msgService = msgService
     }
 
-    func setupEventSource() {
+    @MainActor
+    func setupListeners() {
         msgService.setupConnection()
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -43,7 +44,7 @@ final class DefaultContentViewModel: ContentViewModel {
             })
             .store(in: &cancellables)
     }
-
+    @MainActor
     func readMessages() async {
         do {
             let allMsgs = try await msgService.readMsgs()
@@ -52,7 +53,7 @@ final class DefaultContentViewModel: ContentViewModel {
             print("something wrong:", error)
         }
     }
-
+    @MainActor
     func sendMessage(_ message: String) async {
         do {
             try await msgService.sendMsg(message)

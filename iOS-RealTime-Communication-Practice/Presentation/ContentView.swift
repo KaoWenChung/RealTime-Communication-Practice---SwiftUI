@@ -36,7 +36,7 @@ struct ContentView: View {
         .onAppear {
             Task {
                 await viewModel.readMessages()
-                viewModel.setupEventSource()
+                viewModel.setupListeners()
             }
         }
     }
