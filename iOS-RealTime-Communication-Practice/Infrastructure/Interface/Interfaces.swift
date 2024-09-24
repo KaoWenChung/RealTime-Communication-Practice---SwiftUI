@@ -18,3 +18,17 @@ protocol DecoderType {
 
 extension URLSession: URLSessionType {}
 extension JSONDecoder: DecoderType {}
+
+protocol WebSocketURLSession {
+    func webSocketTask(with url: URL) -> URLSessionWebSocketTask
+}
+
+protocol WebSocketTaskType {
+    func receive(completionHandler: @escaping (Result<URLSessionWebSocketTask.Message, any Error>) -> Void)
+    func send(_ message: URLSessionWebSocketTask.Message) async throws
+    func receive() async throws -> URLSessionWebSocketTask.Message
+    func resume()
+}
+
+extension URLSessionWebSocketTask: WebSocketTaskType {}
+extension URLSession: WebSocketURLSession {}

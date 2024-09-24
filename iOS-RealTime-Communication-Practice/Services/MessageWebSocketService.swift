@@ -10,13 +10,13 @@ import Foundation
 
 final class DefaultMessageWebSocketService {
     private let dataTransfer: DataTransfer
-    private let webSocketTask: URLSessionWebSocketTask
+    private let webSocketTask: WebSocketTaskType
     private var cancellables = Set<AnyCancellable>()
     
-    init(dataTransfer: DataTransfer = DefaultDataTransfer()) {
+    init(dataTransfer: DataTransfer = DefaultDataTransfer(),
+         urlSession: WebSocketURLSession = URLSession(configuration: .default)) {
         self.dataTransfer = dataTransfer
         guard let url = URL(string: APIEndpoints.websocket) else { fatalError("Invalid URL") }
-        let urlSession = URLSession(configuration: .default)
         self.webSocketTask = urlSession.webSocketTask(with: url)
     }
 
