@@ -16,7 +16,7 @@ final class DefaultMessageWebSocketService {
     init(dataTransfer: DataTransfer = DefaultDataTransfer(),
          urlSession: WebSocketURLSession = URLSession(configuration: .default)) {
         self.dataTransfer = dataTransfer
-        guard let url = URL(string: APIEndpoints.websocket) else { fatalError("Invalid URL") }
+        let url = APIEndpoints.websocket()
         self.webSocketTask = urlSession.webSocketTask(with: url)
     }
 

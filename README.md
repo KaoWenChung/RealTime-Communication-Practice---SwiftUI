@@ -32,7 +32,7 @@ Both the web and mobile clients allow sending and receiving messages in real-tim
 1. Clone the repository:
    ```bash
    git clone https://github.com/KaoWenChung/RealTime-Communication-Practice-SwiftUI.git
-   cd RealTime-Communication-Practice-SwiftUI/pip3_SSE
+   cd RealTime-Communication-Practice-SwiftUI/web_server
    ```
 
 2. Set up a virtual environment:
